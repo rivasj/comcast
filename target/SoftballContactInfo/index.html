@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+<meta charset="UTF-8">
+<base href="/SoftballContactInfo/">
+
+<title>Softball Contact Info</title>
+
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="webjars/bootstrap/3.3.6/dist/css/bootstrap.css" />
+<script type="text/javascript" src="webjars/angularjs/1.6.4/angular.min.js"></script>
+<script type="text/javascript" src="webjars/angularjs/1.6.4/angular-route.js"></script>
+<script type="text/javascript" src="webjars/angularjs/1.6.4/angular-resource.js"></script>
+
+<script type="text/javascript" src="js/controller.js"></script>
+<script type="text/javascript" src="js/services.js"></script>
+
+</head>
+<body ng-controller="MyCtrl">
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<h1>Softball Team Contact Information</h1>
+			</div>
+			<div class="col-lg-6"></div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-8">
+				<fieldset>
+					<legend>
+						REST Services <small>By Jesse Rivas</small>
+					</legend>
+
+					<div class="row">
+						<div class="col-lg-12">
+							<fieldset>
+								<legend>Add New Player</legend>
+								<div class="row form-group">
+									<div class="col-lg-6">
+										<label>Name</label> <input type="text" ng-model="newContact.name" class="form-control" maxlength="18" />
+									</div>
+									<div class="col-lg-6">
+										<label>Position</label> <select ng-model="newContact.position" class="form-control">
+											<option ng-repeat="position in positions" value="{{position}}">{{position}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-lg-6">
+										<label>Phone</label> <input type="text" ng-model="newContact.phone" class="form-control" maxlength="12" />
+									</div>
+									<div class="col-lg-6">
+										<label>Email</label> <input type="text" ng-model="newContact.email" class="form-control" maxlength="28" />
+									</div>
+								</div>
+								<div style="float: right;">
+									<button class="btn btn-default" ng-click="addNewPlayer()">Add Player</button>
+								</div>
+							</fieldset>
+						</div>
+					</div>
+
+					<div ng-repeat="contact in contacts">
+						<div class="row">
+							<div class="col-lg-12">
+								<fieldset>
+									<legend>Player {{$index + 1}}</legend>
+									<div class="row form-group">
+										<div class="col-lg-6">
+											<label>Name</label> <input type="text" ng-model="contact.name" class="form-control" ng-disabled="!contact.editable" />
+										</div>
+										<div class="col-lg-6">
+											<label>Position</label> <select ng-model="contact.position" class="form-control" ng-disabled="!contact.editable ">
+												<option ng-repeat="position in positions" value="{{position}}">{{position}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-lg-6">
+											<label>Phone</label> <input type="text" ng-model="contact.phone" class="form-control" ng-disabled="!contact.editable" />
+										</div>
+										<div class="col-lg-6">
+											<label>Email</label> <input type="text" ng-model="contact.email" class="form-control" ng-disabled="!contact.editable" />
+										</div>
+									</div>
+									<div style="float: right;">
+										<button class="btn btn-default" ng-if="!contact.editable" ng-click="editPlayer(contact)">Edit</button>
+										<button class="btn btn-default" ng-if="contact.editable" ng-click="cancelEditPlayer(contact)">Cancel</button>
+										<button class="btn btn-default" ng-if="!contact.editable" ng-click="deletePlayer(contact, $index)">Delete</button>
+										<button class="btn btn-default" ng-if="contact.editable" ng-click="updatePlayer(contact)">Update</button>
+									</div>
+								</fieldset>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+			<div class="col-lg-4"></div>
+		</div>
+	</div>
+
+</body>
+</html>
